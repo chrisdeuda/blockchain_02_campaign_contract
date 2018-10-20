@@ -20,6 +20,11 @@ contract Campaign {
     
     Request[] public requests;
 
+    function Campaign(uint minimum) public {
+        manager = msg.sender;
+        minimumContribution = minimum;
+    }
+
     modifier restricted(){
         require(msg.sender == manager);
         _;
