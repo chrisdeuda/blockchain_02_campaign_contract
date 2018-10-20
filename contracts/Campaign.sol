@@ -36,7 +36,7 @@ contract Campaign {
         approvers[msg.sender] = true;
         approversCount++;
     }
-    
+
     function createRequest(string description, uint value, address recipient)
         public restricted {
         Request memory newRequest = Request({
@@ -47,6 +47,18 @@ contract Campaign {
             approvalCount: 0
         });
         requests.push(newRequest);
+    }
+
+    function approveRequest(uint index ) public {
+        // Pass by referrence for one time access
+        Request storage request = requests[index];
+        
+        require(approvers[msg.sender]);
+        // If they are not yet voted in the current request
+        require(!requests[index].approvals[msg.sender]);
+        
+        request.approvals[msg.sender] = true;
+        request.approvalCount++;
     }
     
     
