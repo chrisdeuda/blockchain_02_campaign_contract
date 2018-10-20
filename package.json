@@ -1,0 +1,29 @@
+{
+  "name": "02_campaign_contract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisdeuda/blockchain_02_campaign_contract.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisdeuda/blockchain_02_campaign_contract/issues"
+  },
+  "homepage": "https://github.com/chrisdeuda/blockchain_02_campaign_contract#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.0",
+    "ganache-cli": "^6.1.8",
+    "mocha": "^5.2.0",
+    "solc": "^0.4.25",
+    "web3": "^1.0.0-beta.35"
+  }
+}
