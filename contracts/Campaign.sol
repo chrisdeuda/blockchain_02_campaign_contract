@@ -19,6 +19,11 @@ contract Campaign {
     
     
     Request[] public requests;
+
+    modifier restricted(){
+        require(msg.sender == manager);
+        _;
+    }
     
     
 }
