@@ -29,6 +29,13 @@ contract Campaign {
         require(msg.sender == manager);
         _;
     }
+
+    function contribute() public payable{
+        require( msg.value > minimumContribution );
+        // It will add new key in the hash
+        approvers[msg.sender] = true;
+        approversCount++;
+    }
     
     
 }
