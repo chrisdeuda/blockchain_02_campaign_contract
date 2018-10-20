@@ -2,78 +2,100 @@
 // Version Identifier of the code
 pragma solidity ^0.4.17;
 
-contract Campaign {
-    address public manager;
-    uint public minimumContribution;
-    mapping(address => bool) public approvers;
+contract CampaignFactory{
+    address[] public deployedCampaigns;
+    
+    function createCampaign(uint minimum) public{
+        address newCampaign = new Campaign(minimum, msg.sender);
+        deployedCampaigns.push(newCampaign);
+    }
+    
+    function getDeployedContracts () public view returns(address[]){
+        return deployedCampaigns;
+    }
+}
+
+contract Campaign{
+    
     struct Request{
         string description;
-        uint value;
-        address recipient;
+        uint amount;
+        address recipient ;
         bool complete;
-        uint approvalCount; //it will not be count the number of vote
-        mapping(address => bool) approvals;
+        uint approvalCount;
+        mapping (address => bool) approvals;
     }
     
-    uint public approversCount;
-    
+    mapping(address => bool) public approvers;
     
     Request[] public requests;
-
-    function Campaign(uint minimum) public {
-        manager = msg.sender;
+    
+    // Number of person participate in the campaign
+    uint public approversCount;
+        
+    address manager ;
+    uint minimumContribution; 
+    
+    function Campaign(uint minimum, address creator) public {
+        manager = creator;
         minimumContribution = minimum;
     }
-
+    
     modifier restricted(){
         require(msg.sender == manager);
         _;
     }
-
+    
+    // It was payable because the user will gonna requre to send some amount;
     function contribute() public payable{
-        require( msg.value > minimumContribution );
-        // It will add new key in the hash
+        require( msg.value > minimumContribution  );
+        
+        // Save the information of the sender in the mapping
+        
         approvers[msg.sender] = true;
         approversCount++;
+        
     }
-
-    function createRequest(string description, uint value, address recipient)
+    function createRequest(string description, uint amount,address recipient) 
         public restricted {
+        // Memory it means we are just using the local copy 
         Request memory newRequest = Request({
             description: description,
-            value: value,
+            amount: amount,
             recipient: recipient,
             complete: false,
             approvalCount: 0
         });
         requests.push(newRequest);
     }
-
-    function approveRequest(uint index ) public {
-        // Pass by referrence for one time access
+    
+    function approveRequest(uint index)public{
+        // They must be as contribute ( exist in the mapping)
+        
         Request storage request = requests[index];
+        require( approvers[msg.sender]);
+        // They should not be approve yet the existing requests
+        // The sender should not be yet in the hash
+        require(! requests[index].approvals[msg.sender]);
         
-        require(approvers[msg.sender]);
-        // If they are not yet voted in the current request
-        require(!requests[index].approvals[msg.sender]);
-        
+        // It will create new hash with boolean value
         request.approvals[msg.sender] = true;
         request.approvalCount++;
     }
-
+    
     function finalizeRequest(uint index) public restricted{
-        // Converting boolean to false
+        // only the manager could finalizeRequest
         
         Request storage request = requests[index];
-        require(! request .complete);
         
-        // Atleast 50% of the votes should be
-        require( request.approvalCount > ( approversCount / 2 ));
+        // Make sure that it is not yet completed 
+        require(! request.complete);
         
-        request.recipient.transfer(request.value);
+        //Must be 50% of the votes should be agree
+        
+        require(request.approvalCount > ( approversCount / 2));
+        
+        request.recipient.transfer( request.amount);
         request.complete = true;
-        
     }
-    
-    
 }
