@@ -60,6 +60,20 @@ contract Campaign {
         request.approvals[msg.sender] = true;
         request.approvalCount++;
     }
+
+    function finalizeRequest(uint index) public restricted{
+        // Converting boolean to false
+        
+        Request storage request = requests[index];
+        require(! request .complete);
+        
+        // Atleast 50% of the votes should be
+        require( request.approvalCount > ( approversCount / 2 ));
+        
+        request.recipient.transfer(request.value);
+        request.complete = true;
+        
+    }
     
     
 }
