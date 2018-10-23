@@ -10,7 +10,7 @@ contract CampaignFactory{
         deployedCampaigns.push(newCampaign);
     }
     
-    function getDeployedContracts () public view returns(address[]){
+    function getDeployedContracts() public view returns(address[]){
         return deployedCampaigns;
     }
 }
