@@ -98,8 +98,4 @@ contract Campaign{
         request.recipient.transfer( request.amount);
         request.complete = true;
     }
-
-    function getManager() public constant returns (address) {
-        return manager;
-    }
 }
