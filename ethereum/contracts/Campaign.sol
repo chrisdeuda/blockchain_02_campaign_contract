@@ -33,7 +33,7 @@ contract Campaign{
     // Number of person participate in the campaign
     uint public approversCount;
         
-    address manager ;
+    address public manager ;
     uint minimumContribution; 
     
     function Campaign(uint minimum, address creator) public {
@@ -97,5 +97,9 @@ contract Campaign{
         
         request.recipient.transfer( request.amount);
         request.complete = true;
+    }
+
+    function getManager() public constant returns (address) {
+        return manager;
     }
 }
