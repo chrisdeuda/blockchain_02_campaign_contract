@@ -5,12 +5,12 @@
  */
 
 require('dotenv').config();
-const HDWalletProvider = require('truffle-hdwallet-provider');
-const Web3 = require('web3');
-const compiledFactory = require('./build/CampaignFactory.json');
+const HDWalletProvider  = require('truffle-hdwallet-provider');
+const Web3              = require('web3');
+const compiledFactory   = require('./build/CampaignFactory.json');
 
-let rinkeby_link = ""+ process.env.ETH_RINKEBY_API_LINK;
-let eth_seeds =   ""+process.env.ETH_SEEDS;
+let rinkeby_link        = ""+ process.env.ETH_RINKEBY_API_LINK;
+let eth_seeds           = ""+process.env.ETH_SEEDS;
 
 console.log("getting data" + rinkeby_link);
 const provider = new HDWalletProvider(
