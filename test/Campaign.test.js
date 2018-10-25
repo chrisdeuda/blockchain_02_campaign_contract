@@ -89,10 +89,10 @@ describe('Campaigns', () => {
 
     });
 
-    // Sending and Processing requests
+    // Sending and Processing requests from the manager
     it('process requests', async () => {
 
-        // Send the
+        // Send the requests
         await campaign.methods.contribute().send({
             from: accounts[0],
             value: web3.utils.toWei('10','ether')
@@ -114,15 +114,12 @@ describe('Campaigns', () => {
         await campaign.methods.finalizeRequest(0).send({
             from: accounts[0],
             gas: '1000000'
-
-        })
+        });
 
         let balance = await web3.eth.getBalance(accounts[1]);
-        balance = web3.utils.fromWei(balance, 'ether');
-        balance = parseFloat(balance);
-
-        console.log(balance);
-
+            balance = web3.utils.fromWei(balance, 'ether');
+            balance = parseFloat(balance);
+    
         assert(balance > 104)
 
 
