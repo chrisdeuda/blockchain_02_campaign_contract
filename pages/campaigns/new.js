@@ -1,23 +1,30 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
-import { Button, Form, Input } from "semantic-ui-react";
+import { Button, Form, Input, Message } from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 
 class CampaignNew extends Component {
   state = {
-    minimumContribution: "" // Assuming that always using their input as strings
+    minimumContribution: "", // Assuming that always using their input as strings
+    errorMessage: "",
   };
 
   onSubmit = async event => {
     event.preventDefault();
 
-    const accounts = await web3.eth.getAccounts();
+    try {
+      const accounts = await web3.eth.getAccounts();
 
-    await factory.methods.createCampaign(this.state.minimumContribution).send({
-      from: accounts[0]
-      // Metamask will automatically specific the gas
-    });
+      await factory.methods
+        .createCampaign(this.state.minimumContribution)
+        .send({
+          from: accounts[0],
+          // Metamask will automatically specific the gas
+        });
+    } catch (error) {
+      this.setState({ errorMessage: error.message });
+    }
   };
 
   render() {
@@ -25,7 +32,13 @@ class CampaignNew extends Component {
       <Layout>
         <h3>Create a Campaign</h3>
         {/* Passing the binding to the submit and not really calling the functions */}
-        <Form onSubmit={this.onSubmit}>
+        {/* 
+         !! - The first exclactiomation (!) converts the string to it's boolean equvalent .
+          If empty it will be false, if contains something. It will be true
+          The last exclatiomation ! negatest the result of the previous exclamation
+        */}
+
+        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
             <lable>Minimum Contribution</lable>
             <Input
@@ -37,7 +50,11 @@ class CampaignNew extends Component {
               }
             />
           </Form.Field>
-          <Button primary> Create !</Button>
+          <Message error header="Oops!" content={this.state.errorMessage} />
+          <Button primary loading>
+            {" "}
+            Create !
+          </Button>
         </Form>
       </Layout>
     );
