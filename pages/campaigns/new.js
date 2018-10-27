@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Input } from "semantic-ui-react";
 
 class CampaignNew extends Component {
   render() {
@@ -10,7 +10,7 @@ class CampaignNew extends Component {
         <Form>
           <Form.Field>
             <lable>Minimum Contribution</lable>
-            <input />
+            <Input label="wei" labelPosition="right" />
           </Form.Field>
           <Button primary> Create !</Button>
         </Form>
