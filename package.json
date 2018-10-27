@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "dev" : "next dev"
+    "dev": "next dev"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "next": "^4.1.4",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "semantic-ui-react": "^0.83.0",
     "solc": "^0.4.25",
     "truffle-hdwallet-provider": "0.0.3",
     "web3": "^1.0.0-beta.35"
