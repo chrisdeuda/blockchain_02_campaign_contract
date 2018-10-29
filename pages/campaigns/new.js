@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
-import { Button, Form, Input, Message } from "semantic-ui-react";
+import { Button, Form, Input, Message, Label } from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
+// {Link} - Dynamically routes navigation
+import { Router } from "../../routes";
 
 class CampaignNew extends Component {
   state = {
     minimumContribution: "", // Assuming that always using their input as strings
     errorMessage: "",
+    loading: false,
   };
 
   onSubmit = async event => {
     event.preventDefault();
+
+    this.setState({
+      loading: true,
+      errorMessage: "",
+    });
 
     try {
       const accounts = await web3.eth.getAccounts();
@@ -22,9 +30,14 @@ class CampaignNew extends Component {
           from: accounts[0],
           // Metamask will automatically specific the gas
         });
+
+      // Redirect user to the campaign list page
+      Router.pushRoute("/");
     } catch (error) {
       this.setState({ errorMessage: error.message });
     }
+
+    this.setState({ loading: false });
   };
 
   render() {
@@ -40,7 +53,7 @@ class CampaignNew extends Component {
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <lable>Minimum Contribution</lable>
+            <Label>Minimum Contribution</Label>
             <Input
               label="wei"
               labelPosition="right"
@@ -51,7 +64,7 @@ class CampaignNew extends Component {
             />
           </Form.Field>
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button primary loading>
+          <Button primary loading={this.state.loading}>
             {" "}
             Create !
           </Button>
