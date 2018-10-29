@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
-import { Button, Form, Input, Message } from "semantic-ui-react";
+import { Button, Form, Input, Message, Label } from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 // {Link} - Dynamically routes navigation
@@ -53,7 +53,7 @@ class CampaignNew extends Component {
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <lable>Minimum Contribution</lable>
+            <Label>Minimum Contribution</Label>
             <Input
               label="wei"
               labelPosition="right"
