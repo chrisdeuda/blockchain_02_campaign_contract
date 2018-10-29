@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import factory from "../ethereum/factory";
 import { Card, Button } from "semantic-ui-react";
 import Layout from "../components/Layout";
+import { Link } from "../routes";
 
 class CampaignIndex extends Component {
   // It skips the intial rendering without accessing the whole methods
@@ -31,12 +32,21 @@ class CampaignIndex extends Component {
       <Layout>
         <div>
           <h3>Open Campaigns</h3>
-          <Button
-            floated="right"
-            content="Create Campaign"
-            icon="add circle"
-            primary={true}
-          />
+          {/**
+           * <Link> Tag is for the navigation functionalities
+           * <a> is for the new tab effects
+           */}
+          <Link route="/campaigns/new">
+            <a className="item">
+              <Button
+                floated="right"
+                content="Create Campaign"
+                icon="add circle"
+                primary={true}
+              />
+            </a>
+          </Link>
+
           {this.renderCampaigns()}
         </div>
       </Layout>
