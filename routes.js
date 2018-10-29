@@ -4,6 +4,9 @@ const routes = require("next-routes")();
 /**
  * : -> It means a wild card / parameters
  */
-routes.add("/campaigns/:address", "/campaigns/show");
+// It overrides the default routings of the next.js
+routes
+  .add("/campaigns/new", "campaigns/new")
+  .add("/campaigns/:address", "/campaigns/show");
 
 module.exports = routes;
