@@ -3,6 +3,8 @@ import Layout from "../../components/Layout";
 import { Button, Form, Input, Message } from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
+// {Link} - Dynamically routes navigation
+import { Router } from "../../routes";
 
 class CampaignNew extends Component {
   state = {
@@ -28,6 +30,9 @@ class CampaignNew extends Component {
           from: accounts[0],
           // Metamask will automatically specific the gas
         });
+
+      // Redirect user to the campaign list page
+      Router.pushRoute("/");
     } catch (error) {
       this.setState({ errorMessage: error.message });
     }
