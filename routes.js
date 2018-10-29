@@ -1,4 +1,4 @@
 // It invoices the function immidiately
-const routest = require("package")();
+const routes = require("next-routes")();
 
 module.exports = routes;
