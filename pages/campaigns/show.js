@@ -66,9 +66,12 @@ class CampaignShow extends Component {
     return (
       <Layout>
         <h3> Show CampaignShow</h3>
-
-        {this.renderCards()}
-        <ContributeForm />
+        <Grid>
+          <Grid.Column width={10}>{this.renderCards()}</Grid.Column>
+          <Grid.Column width={6}>
+            <ContributeForm />
+          </Grid.Column>
+        </Grid>
       </Layout>
     );
   }
