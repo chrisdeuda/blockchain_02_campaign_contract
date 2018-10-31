@@ -17,11 +17,27 @@ class RequestNew extends Component {
 
     return { address };
   }
+
+  onSubmit = async event => {
+    event.preventDefault();
+
+    const campaign = Campaign(this.props.address);
+    const { description, value, recipient } = this.state;
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods
+        .createRequest(description, web3.utils.toWei(value, "ether"), recipient)
+        .send({ from: accounts[0] });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     return (
       <Layout>
         <h3>Create a Request</h3>
-        <Form>
+        <Form onSubmit={this.onSubmit}>
           <Form.Field>
             <label> Description</label>
             <Input
