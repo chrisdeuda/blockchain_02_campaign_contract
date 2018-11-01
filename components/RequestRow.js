@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Button } from "semantic-ui-react";
 import web3 from "../ethereum/web3";
+import Campaign from "../ethereum/campaign";
 
 class RequestRow extends Component {
   render() {
@@ -14,6 +15,11 @@ class RequestRow extends Component {
         <Cell>{request.recipient}</Cell>
         <Cell>
           {request.approvalCount}/{approversCount}
+        </Cell>
+        <Cell>
+          <Button color="green" basic onClick={this.onApprove}>
+            Approve
+          </Button>
         </Cell>
       </Row>
     );
