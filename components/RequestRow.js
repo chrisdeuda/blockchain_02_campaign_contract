@@ -28,6 +28,9 @@ class RequestRow extends Component {
           <Button color="green" basic onClick={this.onApprove}>
             Approve
           </Button>
+          <Button color="teal" basic onClick={this.onFinalize}>
+            Finalize
+          </Button>
         </Cell>
       </Row>
     );
